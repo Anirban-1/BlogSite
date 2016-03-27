@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BlogIt</title>
+</head>
+<body>
+<a href="{% url 'logout' %}">Logout</a>
+<h1> {{ post.post_title }} </h1>
+<p>
+    {{ post.post_body }}
+</p>
+<p>
+    Published on: {{ post.post_date }}
+</p>
+</body>
+</html>

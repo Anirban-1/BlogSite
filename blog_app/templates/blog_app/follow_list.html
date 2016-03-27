@@ -1,0 +1,8 @@
+<html>
+	<h2>People you are following</h2>
+	<ul>
+		{% for people in following_list %}
+			<li><a href="{% url 'home' people.following %}">{{ people.following }}</a></li>
+		{% endfor %}
+	</ul>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>BlogIt</title>
+  </head>
+  <body>
+    <h1>BlogIt</h1>
+    <a href="{% url 'logout' %}">Logout</a>
+    {% if real_user == other_user %}
+        <h4> Welcome {{ real_user }}!</h4>
+        <br>
+        <p>
+        {% if posts %}
+            <h3>Some of your posts:</h3>
+            <ul>
+                {% for post in posts %}
+                <li><a href="{% url 'post_details' real_user post.id %}">{{ post.post_title }}</a></li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'all_posts' real_user %}">View all your posts</a>
+        {% else %}
+            <h3>No posts yet to display</h3>
+        {% endif %}
+        </p>
+        <form action="{% url 'publish' %}" method="post">
+            {% csrf_token %}
+            <label for="post_title">Title</label><br>
+            <input type="text" name="post_title">
+            <label for="post_body">Description</label><br>
+            <textarea name="post_body"></textarea>
+            <input type="submit" value="Post">
+        </form>
+        {% if following_list %}
+            <a href="{% url 'follow_list' real_user %}">Check out the people you are following</a>
+        {% endif %}
+    {% else %}
+    <p>
+        {% if other_user not in following_list %}
+            <a href="{% url 'follow' other_user %}">Follow this person</a>
+        {% endif %}
+        <br>
+        {{ other_user }}'s posts:
+        <ul>
+        {% for post in other_user_posts %}
+        <li> <a href="{% url 'post_details' other_user post.id %}">{{ post.post_title }}</a></li>
+        {% endfor %}
+        </ul>
+    </p>
+    {% endif %}
+  </body>
+</html>
